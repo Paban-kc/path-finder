@@ -1,0 +1,19 @@
+# Ignore virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Ignore database files
+db.sqlite3
+
+# Ignore static and media files (if you are using these directories for local development)
+staticfiles/
+media/
+
+# Ignore other sensitive data or temporary files
+*.pyc
+__pycache__/
+.vscode/
+.idea/
+.DS_Store
