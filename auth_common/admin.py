@@ -2,18 +2,43 @@
 
 from django.contrib import admin
 from .model.user import User
-from .model.userManager import UserManager
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 
-# Register your models here.
-# auth_common/admin.py
+class UserModelAdmin(BaseUserAdmin):
+    # The fields to be used in displaying the User model.
+    # These override the definitions on the base UserAdmin
+    # that reference specific fields on auth.User.
+    list_display = ["id", "email", "name", "is_admin"]
+    list_filter = ["is_admin"]
+    fieldsets = [
+        (None, {"fields": ["email", "password"]}),
+        (
+            "Personal info",
+            {"fields": ["name"]},
+        ),
+        (
+            "Permissions",
+            {"fields": ["is_admin"]},
+        ),
+    ]
+    # add_fieldsets is not a standard ModelAdmin attribute. UserAdmin
+    # overrides get_fieldsets to use this attribute when creating a user.
+    add_fieldsets = [
+        (
+            None,
+            {
+                "classes": ["wide"],
+                "fields": ["email", "name", "password1", "password2"],
+            },
+        ),
+    ]
+    search_fields = ["email"]
+    ordering = ["email"]
+    filter_horizontal = []
 
 
-class UserAdmin(admin.ModelAdmin):
-    list_display = ("email", "name", "is_active", "is_admin")
-    list_filter = ("is_active", "is_admin")
-    search_fields = ("email", "name")
-    ordering = ("email",)
-
-
-admin.site.register(User, UserAdmin)
+# Now register the new UserAdmin...
+admin.site.register(User, UserModelAdmin)
+# ... and, since we're not using Django's built-in permissions,
+# unregister the Group model from admin.

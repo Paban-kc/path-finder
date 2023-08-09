@@ -9,11 +9,11 @@ class User(AbstractBaseUser):
         max_length=255,
         unique=True,
     )
-    name = models.CharField(max_length=20)
+    name=models.CharField(max_length=200)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    created_at = models.DateField(auto_now_add=True)
-    updated_at = models.DateField(auto_now=True)
+    craeted_at=models.DateField(auto_now_add=True)
+    updated_at=models.DateField(auto_now_add=True)
 
     objects = UserManager()
 

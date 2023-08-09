@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
 # get the user model
-UserModel = get_user_model()
+User = get_user_model()
 
 
 class UserDetailSerializer(serializers.ModelSerializer):
@@ -18,7 +18,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
         return username
 
     class Meta:
-        model = UserModel
+        model = User
         fields = (
             "id",
             "email",

@@ -1,62 +1,59 @@
-from django.conf import settings
-from django.contrib.auth import get_user_model
-from django.contrib.auth.forms import SetPasswordForm
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.encoding import force_str
-from django.utils.translation import gettext_lazy as _
-from rest_framework import serializers
-from rest_framework.exceptions import ValidationError
+# from rest_framework import serializers
+# from django.contrib.auth.tokens import default_token_generator
+# from django.contrib.auth import get_user_model, password_validation
+# from django.contrib.auth.models import AbstractBaseUser
 
-from ..utils import base36_to_int
-
-# Get the UserModel
-UserModel = get_user_model()
+# User = get_user_model()
 
 
-class ConfirmPasswordSerializer(serializers.Serializer):
-    """
-    Serializer for confirming a password reset attempt.
-    """
+# class ConfirmPasswordSerializer(serializers.Serializer):
+#     token = serializers.CharField()
+#     uid = serializers.CharField()
+#     new_password1 = serializers.CharField(write_only=True)
+#     new_password2 = serializers.CharField(write_only=True)
 
-    new_password1 = serializers.CharField(
-        max_length=128, required=True, allow_blank=False
-    )
-    new_password2 = serializers.CharField(
-        max_length=128, required=True, allow_blank=False
-    )
-    uid = serializers.CharField(required=True, allow_blank=False)
-    token = serializers.CharField(required=True, allow_blank=False)
+#     def validate(self, data):
+#         token = data.get("token")
+#         uid = data.get("uid")
 
-    set_password_form_class = SetPasswordForm
+#         try:
+#             # Decode the uid to get the user object
+#             user = User.objects.get(pk=AbstractBaseUser().id_decoder(uid))
+#         except User.DoesNotExist:
+#             raise serializers.ValidationError("Invalid uid")
 
-    _errors = {}
-    user = None
-    set_password_form = None
+#         # Check if the provided token is valid for the user
+#         if not default_token_generator.check_token(user, token):
+#             raise serializers.ValidationError("Invalid token")
 
-    def custom_validation(self, attrs):
-        pass
+#         # Validate password
+#         new_password1 = data.get("new_password1")
+#         new_password2 = data.get("new_password2")
+#         if new_password1 != new_password2:
+#             raise serializers.ValidationError(
+#                 "The two new password fields didn't match."
+#             )
 
-    def validate(self, attrs):
-        # Decode the uidb36 to uid to get User object
-        try:
-            uid = force_str((base36_to_int(attrs["uid"])))
-            self.user = UserModel._default_manager.get(pk=uid)
-        except (TypeError, ValueError, OverflowError, UserModel.DoesNotExist):
-            raise ValidationError({"uid": ["Invalid value"]})
+#         try:
+#             password_validation.validate_password(new_password1, user)
+#         except serializers.ValidationError as exc:
+#             raise serializers.ValidationError({"new_password1": exc.messages})
 
-        if not default_token_generator.check_token(self.user, attrs["token"]):
-            raise ValidationError({"token": ["Invalid value"]})
+#         return data
 
-        self.custom_validation(attrs)
-        # Construct SetPasswordForm instance
-        self.set_password_form = self.set_password_form_class(
-            user=self.user,
-            data=attrs,
-        )
-        if not self.set_password_form.is_valid():
-            raise serializers.ValidationError(self.set_password_form.errors)
+#     def save(self):
+#         token = self.validated_data["token"]
+#         uid = self.validated_data["uid"]
+#         new_password = self.validated_data["new_password1"]
 
-        return attrs
+#         # Implement your password reset confirmation logic here, e.g., set the new password for the user.
+#         # You can use the same `UserManager` as in the previous code snippet for the user operations.
 
-    def save(self):
-        return self.set_password_form.save()
+#         # For example:
+#         try:
+#             user = User.objects.get(pk=AbstractBaseUser().id_decoder(uid))
+#         except User.DoesNotExist:
+#             raise serializers.ValidationError("Invalid uid")
+
+#         user.set_password(new_password)
+#         user.save()
