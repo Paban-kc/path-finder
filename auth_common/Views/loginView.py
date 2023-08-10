@@ -16,6 +16,7 @@ from rest_framework.views import APIView
 from ..serializers import JWTSerializer, LoginSerializer
 from ..utils.jwtEncode import jwt_encode
 from django.contrib.auth import authenticate
+from .registerView import get_tokens_for_user
 
 class LoginView(APIView):
     def post(self, request, format=None):
@@ -25,7 +26,8 @@ class LoginView(APIView):
             password = serializer.data.get("password")
             user = authenticate(email=email, password=password)
             if user is not None:
-                return Response({"msg": "Login success"}, status=status.HTTP_200_OK)
+                token = get_tokens_for_user(user)
+                return Response({"Token":token,"msg": "Login success"}, status=status.HTTP_200_OK)
 
             else:
                 return Response(

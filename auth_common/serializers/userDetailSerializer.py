@@ -22,6 +22,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "email",
+            "is_student"
             "last_name",
             "first_name",
             "full_name",

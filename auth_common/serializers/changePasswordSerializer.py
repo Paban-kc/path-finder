@@ -6,7 +6,7 @@ from rest_framework import serializers
 
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(max_length=128)
-    new_password1 = serializers.CharField(max_length=128)
+    new_passwor1d = serializers.CharField(max_length=128)
     new_password2 = serializers.CharField(max_length=128)
 
     set_password_form_class = SetPasswordForm
