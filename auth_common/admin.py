@@ -1,7 +1,7 @@
 # auth_common/admin.py
 
 from django.contrib import admin
-from .model.user import User
+from .model.auth import User
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 
@@ -9,7 +9,7 @@ class UserModelAdmin(BaseUserAdmin):
     # The fields to be used in displaying the User model.
     # These override the definitions on the base UserAdmin
     # that reference specific fields on auth.User.
-    list_display = ["id", "email", "name", "is_admin"]
+    list_display = ["id", "email", "name", "is_admin", "is_student"]
     list_filter = ["is_admin"]
     fieldsets = [
         (None, {"fields": ["email", "password"]}),

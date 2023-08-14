@@ -3,8 +3,8 @@ from django.contrib.auth.password_validation import validate_password
 from django.core.exceptions import ValidationError as DjangoValidationError
 from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
-from ..model import UserManager
-from ..model import User
+from ..model.auth import UserManager
+from ..model.auth import User
 
 User = get_user_model()
 
@@ -14,7 +14,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["name", "email","is_student", "password", "password2"]
+        fields = ["name", "email", "is_student", "password", "password2"]
         extra_kwargs = {"password": {"write_only": True}}
 
     def validate(self, attrs):
@@ -28,4 +28,5 @@ class RegisterSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
+        print(validated_data)
         return User.objects.create_user(**validated_data)
