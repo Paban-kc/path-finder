@@ -1,41 +1,63 @@
 from django.conf import settings
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from rest_framework import serializers
-
-from ..utils import int_to_base36, send_mail
+from django.contrib.auth.forms import SetPasswordForm
+from ..utils import int_to_base36
+from django.core.mail import send_mail
 
 UserModel = get_user_model()
 
 
 class ResetPasswordSerializer(serializers.Serializer):
-    """
-    Serializer for requesting a password reset e-mail.
-    """
+    old_password = serializers.CharField(max_length=128)
+    new_password1 = serializers.CharField(max_length=128)
+    new_password2 = serializers.CharField(max_length=128)
 
-    email = serializers.EmailField(required=True, allow_blank=False)
+    set_password_form_class = SetPasswordForm
 
-    def validate_email(self, value):
-        if not UserModel.objects.filter(username=value).exists():
-            raise serializers.ValidationError(_("User does not exists."))
+    set_password_form = None
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.request = self.context.get("request")
+        self.user = getattr(self.request, "user", None)
+
+    def validate_old_password(self, value):
+        if not self.user.check_password(value):
+            err_msg = _(
+                "Your old password was entered incorrectly. Please enter it again."
+            )
+            raise serializers.ValidationError(err_msg)
         return value
 
-    def save(self, **kwargs):
-        email = self.validated_data["email"]
-        token_generator = kwargs.get("token_generator", default_token_generator)
-        request = self.context.get("request")
+    def custom_validation(self, attrs):
+        pass
 
-        for user in self.users:
-            token = token_generator.make_token(user)
+    def validate(self, attrs):
+        self.set_password_form = self.set_password_form_class(
+            user=self.user,
+            data=attrs,
+        )
 
-            path = reverse(
-                "confirm_password_template",
-                args=[int_to_base36(user.pk), token],
+        self.custom_validation(attrs)
+        if not self.set_password_form.is_valid():
+            raise serializers.ValidationError(self.set_password_form.errors)
+
+        # Check if new password is the same as the old password
+        new_password = attrs.get("new_password1")
+        if self.user.check_password(new_password):
+            raise serializers.ValidationError(
+                "New password must be different from old password."
             )
-            url = request.build_absolute_uri(path)
 
-            context = {"User": user, "reset_password_url": url, "request": request}
-            send_mail(settings.MAIL_NAME["RESET_PASSWORD"], [user.id], **context)
-        return email
+        # Update attrs dictionary with cleaned data
+        attrs["new_password1"] = self.set_password_form.cleaned_data["new_password1"]
+        return attrs
+
+    def save(self):
+        self.set_password_form.save()
+        update_session_auth_hash(self.request, self.user)
