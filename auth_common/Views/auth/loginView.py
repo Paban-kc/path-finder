@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from ..serializers import LoginSerializer
+from ...serializers.auth import LoginSerializer
 from django.contrib.auth import authenticate
 from .registerView import get_tokens_for_user
 

@@ -1,5 +1,5 @@
 from .application import Application
 from .internship import Internship
-from .organization import Organization
+from .organization import OrganizationProfile
 from .placement import Placement
-from .student import Student
+from .student import StudentProfile

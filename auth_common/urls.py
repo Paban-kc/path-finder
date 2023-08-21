@@ -1,4 +1,5 @@
-from .Views import (
+from auth_common.Views.organization_profile.organizationProfileViewSet import OrganizationProfileViewSet
+from .Views.auth import (
     LoginView,
     LogoutView,
     RegisterView,
@@ -8,13 +9,10 @@ from .Views import (
 )
 from django.urls import path, re_path
 from django.views.generic import TemplateView
+from .Views.student_profile import StudentProfileViewSet
+
 
 urlpatterns = [
-    re_path(
-        r"^password-reset/(?P<uidb36>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,32})/$",  # noqa: E501
-        TemplateView.as_view(),
-        name="confirm_password_template",
-    ),
     path("auth/login/", LoginView.as_view(), name="login"),
     path("auth/logout/", LogoutView.as_view(), name="logout"),
     path("auth/register/", RegisterView.as_view(), name="register"),
@@ -24,5 +22,16 @@ urlpatterns = [
         "auth/change_password/",
         UserChangePasswordView.as_view(),
         name="change_password",
+    ),
+    # others
+    path(
+        "auth/student-profile/",
+        StudentProfileViewSet.as_view({"get": "list", "post": "create"}),
+        name="student-profile",
+    ),
+    path(
+        "auth/organization-profile/",
+        OrganizationProfileViewSet.as_view({"get": "list", "post": "create"}),
+        name="organization-profile",
     ),
 ]

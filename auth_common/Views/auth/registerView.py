@@ -1,8 +1,7 @@
 from rest_framework import status
 from rest_framework.generics import CreateAPIView
 from rest_framework.response import Response
-from ..serializers import RegisterSerializer
-from ..serializers import RegisterSerializer
+from ...serializers.auth import RegisterSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 
 

@@ -1,0 +1,5 @@
+from .studentProfileCreateSerializer import StudentCreateSerializer
+from .studentProfileListSerializer import StudentListSerializer
+from .studentprofileRetrieveSerializer import StudentRetrieveSerializer
+from .studentProfileUpdateSerializer import StudentUpdateSerializer
+from .editStudentProfileSerializer import StudentProfileEditSerializer

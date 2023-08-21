@@ -1,9 +1,9 @@
 from django.db import models
+from .auth import User, CustomUserModel
 
 
-class Organization(models.Model):
+class OrganizationProfile(CustomUserModel):
     company_id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
     industry = models.CharField(max_length=255)
     location = models.CharField(max_length=255)
     website = models.URLField()

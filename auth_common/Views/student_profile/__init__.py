@@ -1,0 +1,1 @@
+from .studentProfileViewSet import StudentProfileViewSet

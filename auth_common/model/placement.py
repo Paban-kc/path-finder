@@ -1,4 +1,4 @@
-from .student import Student
+from .student import StudentProfile
 from .internship import Internship
 from django.db import models
 
@@ -8,5 +8,5 @@ class Placement(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
     supervisor = models.CharField(max_length=255)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey(StudentProfile, on_delete=models.CASCADE)
     internship = models.ForeignKey(Internship, on_delete=models.CASCADE)

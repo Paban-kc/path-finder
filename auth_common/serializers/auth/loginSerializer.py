@@ -6,7 +6,7 @@ from django.utils.encoding import force_str
 from django.utils.translation import gettext_lazy as _
 from rest_framework import exceptions, serializers
 from rest_framework.exceptions import ValidationError
-from ..model.auth import User
+from ...model.auth import User
 
 
 class LoginSerializer(serializers.ModelSerializer):

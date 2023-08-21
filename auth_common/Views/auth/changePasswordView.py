@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
-from ..serializers import ChangePasswordSerializer
+from ...serializers.auth import ChangePasswordSerializer
 from rest_framework import status
 from rest_framework.response import Response
 

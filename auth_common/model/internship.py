@@ -1,4 +1,4 @@
-from .organization import Organization
+from .organization import OrganizationProfile
 
 from django.db import models
 
@@ -12,4 +12,4 @@ class Internship(models.Model):
     location = models.CharField(max_length=255)
     compensation = models.CharField(max_length=255)
     requirements = models.TextField()
-    company = models.ForeignKey(Organization, on_delete=models.CASCADE)
+    company = models.ForeignKey(OrganizationProfile, on_delete=models.CASCADE)
