@@ -1,8 +1,6 @@
 from rest_framework import serializers
 from auth_common.model import Organization
-from auth_common.serializers.auth.userProfileSerializer import UserProfileSerializer
-
-class OrganizationRegisterEditProfileCreateSerializer(serializers.ModelSerializer):
+class OrganizationProfileCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organization
         exclude=["user"]
