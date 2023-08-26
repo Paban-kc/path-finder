@@ -1,10 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.contrib.auth.password_validation import validate_password
-from django.core.exceptions import ValidationError as DjangoValidationError
-from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
-from ..model.auth import UserManager
-from ..model.auth import User
 
 User = get_user_model()
 
@@ -14,8 +9,9 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["name", "email", "is_student", "password", "password2"]
+        fields = ["first_name","last_name","gender", "email", "is_student", "password", "password2"]
         extra_kwargs = {"password": {"write_only": True}}
+
 
     def validate(self, attrs):
         password = attrs.get("password")
@@ -23,10 +19,12 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         if password != password2:
             raise serializers.ValidationError(
-                "password and confirm password dose not match"
+                "password and confirm password do not match"
             )
         return attrs
 
     def create(self, validated_data):
-        print(validated_data)
-        return User.objects.create_user(**validated_data)
+        is_student = validated_data.pop(
+            "is_student"
+        )  # Remove is_student from validated_data
+        return User.objects.create_user(is_student=is_student, **validated_data)

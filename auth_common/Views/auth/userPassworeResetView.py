@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from ..serializers.userPasswordResetSerializer import UserPasswordResetSerializer
+from ...serializers.auth import UserPasswordResetSerializer
 
 
 class UserPasswordResetView(APIView):

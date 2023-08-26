@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils.translation import gettext as _
 from rest_framework import serializers
 from django.contrib.auth.forms import SetPasswordForm
-from ..utils import int_to_base36
+from ...utils import int_to_base36
 from django.core.mail import send_mail
 
 UserModel = get_user_model()
