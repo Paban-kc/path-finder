@@ -1,10 +1,5 @@
-from auth_common.Views.application.applicationView import ApplicationApplyViewSet
-from auth_common.Views.feedback.feedbackView import FeedbackViewSet
-from auth_common.Views.internship_submission.internshipSubmissionView import (
-    InternshipSubmissionViewSet,
-)
-from auth_common.Views.placement.placementView import PlacementFromApplicationView
-from auth_common.Views.user_profile.userProfileView import RegisterEditProfileViewSet
+from django.urls import path, re_path, include
+from rest_framework.routers import DefaultRouter
 from .Views.auth import (
     LoginView,
     LogoutView,
@@ -13,9 +8,35 @@ from .Views.auth import (
     UserChangePasswordView,
     ResetPasswordView,
 )
-from django.urls import path, re_path
+from .Views.application.applicationView import ApplicationApplyViewSet
+from .Views.feedback.feedbackView import FeedbackViewSet
+from .Views.internship_submission.internshipSubmissionView import (
+    InternshipSubmissionViewSet,
+)
+from .Views.placement.placementView import PlacementFromApplicationView
+from .Views.user_profile.userProfileView import RegisterEditProfileViewSet
 
+app_name = "auth_common"
 
+# Create a router instance
+router = DefaultRouter(trailing_slash=False)
+
+# Register your viewsets with the router
+router.register(
+    r"auth/application-apply", ApplicationApplyViewSet, basename="application-apply"
+)
+router.register(r"auth/feedback", FeedbackViewSet, basename="feedback")
+router.register(
+    r"auth/internship-submission",
+    InternshipSubmissionViewSet,
+    basename="internship-submission",
+)
+router.register(r"auth/placement", PlacementFromApplicationView, basename="placement")
+router.register(
+    r"auth/register-profile", RegisterEditProfileViewSet, basename="register-profile"
+)
+
+# Define your urlpatterns for views that are not viewsets
 urlpatterns = [
     path("auth/login/", LoginView.as_view(), name="login"),
     path("auth/logout/", LogoutView.as_view(), name="logout"),
@@ -27,63 +48,7 @@ urlpatterns = [
         UserChangePasswordView.as_view(),
         name="change_password",
     ),
-    # others
-    path(
-        "auth/register-profile/",
-        RegisterEditProfileViewSet.as_view(
-            {
-                "get": "list",
-                "post": "create",
-                "put": "update_profile",
-                "patch": "partial_update",
-            }
-        ),
-        name="register-profile",
-    ),
-    path(
-        "auth/internship-submission/",
-        InternshipSubmissionViewSet.as_view(
-            {
-                "get": "list",
-                "post": "create",
-            }
-        ),
-        name="internship-submission",
-    ),
-    path(
-        "auth/application-apply/",
-        ApplicationApplyViewSet.as_view(
-            {
-                "get": "list",
-                "post": "create",
-                "patch": "partial_update",
-                "delete": "destroy",
-            }
-        ),
-        name="application-apply",
-    ),
-    path(
-        "auth/placement/",
-        PlacementFromApplicationView.as_view(
-            {
-                "get": "list",
-                "post": "create",
-                "patch": "partial_update",
-                "delete": "destroy",
-            }
-        ),
-        name="placement",
-    ),
-    path(
-        "auth/feedback/",
-        FeedbackViewSet.as_view(
-            {
-                "get": "list",
-                "post": "create",
-                "patch": "partial_update",
-                "delete": "destroy",
-            }
-        ),
-        name="feedback",
-    ),
 ]
+
+# Include the router URLs
+urlpatterns += router.urls

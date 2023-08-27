@@ -32,7 +32,7 @@ from .filters.filterForOrganizationProfile import FilterForOrganization
 from .filters.filterForStudentProfile import FilterForStudent
 
 
-class RegisterEditProfileViewSet(viewsets.ViewSet):
+class RegisterEditProfileViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.DjangoFilterBackend, OrderingFilter, SearchFilter]
     http_method_names = ["get", "head", "post", "patch", "put"]
     filterset_class = {"list": FilterForStudent, "list_profile": FilterForOrganization}
@@ -126,7 +126,6 @@ class RegisterEditProfileViewSet(viewsets.ViewSet):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(detail=False, methods=["get"])
     def list(self, request):
         user = request.user
         is_student = user.is_student
@@ -140,7 +139,6 @@ class RegisterEditProfileViewSet(viewsets.ViewSet):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    @action(detail=False, methods=["get"])
     def list_profiles(self, request):
         user = request.user
         if user.is_student:

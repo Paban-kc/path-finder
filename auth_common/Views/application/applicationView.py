@@ -16,6 +16,7 @@ class ApplicationApplyViewSet(viewsets.ModelViewSet):
     queryset = Application.objects.all()
     serializer_class = ApplicationApplyCreateSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    http_method_names = ["get", "head", "post", "patch", "put","delete"]
     filterset_fields = ["student_profile", "internship", "status"]
     search_fields = [
         "student_profile__user__first_name",
