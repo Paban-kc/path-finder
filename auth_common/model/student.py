@@ -7,7 +7,6 @@ from .auth import BaseInfoModel
 
 class Student(BaseInfoModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="student_user")
-    student_id = models.AutoField(primary_key=True)
     phone = models.CharField(max_length=10)
     alt_phone = models.CharField(max_length=10)
     university = models.CharField(max_length=255)

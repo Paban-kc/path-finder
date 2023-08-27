@@ -1,13 +1,8 @@
 from rest_framework import serializers
 from auth_common.model import Student
 
-from auth_common.model.auth.user import User
-from auth_common.serializers.auth.userProfileSerializer import UserProfileSerializer
 
-
-class StudentRegisterEditProfileCreateSerializer(serializers.ModelSerializer):
-    # user = UserProfileSerializer()
-
+class StudentProfileCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         exclude = ["user"]
