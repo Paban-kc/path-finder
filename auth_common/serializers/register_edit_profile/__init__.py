@@ -1,2 +1,0 @@
-from .OrganizationRegisterEditProfileCreateSerializer import OrganizationRegisterEditProfileCreateSerializer
-from .studentRegisterEditProfileCreateSerializer import StudentRegisterEditProfileCreateSerializer
