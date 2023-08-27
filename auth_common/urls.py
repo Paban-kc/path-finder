@@ -1,4 +1,5 @@
 from auth_common.Views.application.applicationView import ApplicationApplyViewSet
+from auth_common.Views.feedback.feedbackView import FeedbackViewSet
 from auth_common.Views.internship_submission.internshipSubmissionView import (
     InternshipSubmissionViewSet,
 )
@@ -13,7 +14,6 @@ from .Views.auth import (
     ResetPasswordView,
 )
 from django.urls import path, re_path
-from django.views.generic import TemplateView
 
 
 urlpatterns = [
@@ -73,5 +73,17 @@ urlpatterns = [
             }
         ),
         name="placement",
+    ),
+    path(
+        "auth/feedback/",
+        FeedbackViewSet.as_view(
+            {
+                "get": "list",
+                "post": "create",
+                "patch": "partial_update",
+                "delete": "destroy",
+            }
+        ),
+        name="feedback",
     ),
 ]
