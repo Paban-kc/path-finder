@@ -42,20 +42,18 @@ class ApplicationApplyCreateSerializer(serializers.ModelSerializer):
             "organization": instance.internship.organization.id,
         }
 
-        application_data = {
-            "id": data["id"],
-            "created_at": data["created_at"],
-            "updated_at": data["updated_at"],
-            "date_applied": data["date_applied"],
-            "status": data["status"],
-            "resume": data["resume"],
-            "cover_letter": data["cover_letter"],
-        }
-
         final_representation = {
-            "application": application_data,
             "student_profile": {**user, **student_profile_data},
             "internship": internship_data,
+            "application": {
+                "id": data["id"],
+                "created_at": data["created_at"],
+                "updated_at": data["updated_at"],
+                "date_applied": data["date_applied"],
+                "status": data["status"],
+                "resume": data["resume"],
+                "cover_letter": data["cover_letter"],
+            },
         }
 
         return final_representation

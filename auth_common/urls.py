@@ -2,6 +2,7 @@ from auth_common.Views.application.applicationView import ApplicationApplyViewSe
 from auth_common.Views.internship_submission.internshipSubmissionView import (
     InternshipSubmissionViewSet,
 )
+from auth_common.Views.placement.placementView import PlacementFromApplicationView
 from auth_common.Views.user_profile.userProfileView import RegisterEditProfileViewSet
 from .Views.auth import (
     LoginView,
@@ -60,5 +61,17 @@ urlpatterns = [
             }
         ),
         name="application-apply",
+    ),
+    path(
+        "auth/placement/",
+        PlacementFromApplicationView.as_view(
+            {
+                "get": "list",
+                "post": "create",
+                "patch": "partial_update",
+                "delete": "destroy",
+            }
+        ),
+        name="placement",
     ),
 ]
