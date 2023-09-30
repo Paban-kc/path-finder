@@ -106,5 +106,13 @@ class ApplicationApplyViewSet(viewsets.ModelViewSet):
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
-        context["student_profile"] = self.request.user.student_user
+
+        # Check if the user has the attribute student_user
+        if hasattr(self.request.user, "student_user"):
+            context["student_profile"] = self.request.user.student_user
+        else:
+            context[
+                "student_profile"
+            ] = None 
+
         return context
