@@ -1,7 +1,7 @@
+from auth_common.model.organization import Organization
 from auth_common.model.student import Student
 from .internship import Internship
 from .auth import BaseInfoModel
-
 
 from django.db import models
 
@@ -17,3 +17,7 @@ class Application(BaseInfoModel):
     internship = models.ForeignKey(
         Internship, on_delete=models.CASCADE, related_name="applications"
     )
+    is_approved = models.BooleanField(default=False)  
+
+    class Meta:
+        unique_together = ("student_profile", "internship")

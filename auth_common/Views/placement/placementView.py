@@ -16,9 +16,7 @@ from ...serializers.placement import (
 
 
 class PlacementFromApplicationView(viewsets.ModelViewSet):
-    queryset = (
-        Placement.objects.all()
-    )
+    queryset = Placement.objects.all()
     serializer_class = PlacementFromApplicationSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ["status"]
@@ -38,7 +36,7 @@ class PlacementFromApplicationView(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())  # Apply filters
+        queryset = self.filter_queryset(self.get_queryset())
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 

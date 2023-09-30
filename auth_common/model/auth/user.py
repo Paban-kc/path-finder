@@ -8,6 +8,7 @@ from .userManager import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    
     GENDER_CHOICES = [
         ("M", "male"),
         ("F", "female"),
