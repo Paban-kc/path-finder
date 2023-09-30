@@ -6,13 +6,13 @@ class InternshipSubmissionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Internship
         exclude = ["organization"]
+    
+    def to_search_representation(self, instance):
+        data = self.to_representation(instance)
+        data["organization_name"] = instance.organization.organization_name
+        data["title"] = instance.title
 
-    def create(self, validated_data):
-        user = self.context["request"].user
-        organization = user.organization_user
-        validated_data["organization"] = organization
-        internship = Internship.objects.create(**validated_data)
-        return internship
+        return data
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
