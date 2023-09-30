@@ -5,6 +5,7 @@ from ...serializers.user_profile import (
     OrganizationProfileCreateSerializer,
     StudentProfileCreateSerializer,
 )
+from rest_framework.permissions import IsAuthenticated
 from django.http import QueryDict
 from rest_framework import status
 from rest_framework.filters import SearchFilter, OrderingFilter
@@ -35,7 +36,9 @@ from ...model.student import Student
 
 class RegisterEditProfileViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.DjangoFilterBackend, OrderingFilter, SearchFilter]
+    serializer_class = StudentProfileCreateSerializer
     http_method_names = ["get", "head", "post", "patch", "put"]
+    permission_classes = [IsAuthenticated]
     # filterset_class = {"list": FilterForStudent, "list_profile": FilterForOrganization}
 
     def get_queryset(self):
