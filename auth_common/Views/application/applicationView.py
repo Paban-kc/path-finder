@@ -3,16 +3,24 @@ from rest_framework import permissions
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django_filters.rest_framework import DjangoFilterBackend
 from auth_common.model.application import Application
-from ...serializers.application import (
-    ApplicationApplyCreateSerializer,
-    ApplicationListSerializer,
-    ApplicationUpdateSerializer,
-    ApplicationRetrieveSerializer,
-)
+
 from rest_framework import permissions
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
+
+from auth_common.serializers.application.applicationCreateSerializer import (
+    ApplicationApplyCreateSerializer,
+)
+from auth_common.serializers.application.applicationListSerailizer import (
+    ApplicationListSerializer,
+)
+from auth_common.serializers.application.applicationRetrieveSerializer import (
+    ApplicationRetrieveSerializer,
+)
+from auth_common.serializers.application.applicationUpdateSerializer import (
+    ApplicationUpdateSerializer,
+)
 
 
 class ApplicationApplyViewSet(viewsets.ModelViewSet):

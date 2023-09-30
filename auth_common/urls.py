@@ -46,7 +46,7 @@ urlpatterns = [
     path(
         "auth/change_password/",
         UserChangePasswordView.as_view(),
-        name="change_password",
+        name="change-password",
     ),
 ]
 
