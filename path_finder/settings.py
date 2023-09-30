@@ -14,6 +14,8 @@ from pathlib import Path
 from datetime import timedelta
 import os
 
+# from rest_framework_swagger.views import get_swagger_view
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 # Media
@@ -45,6 +47,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corsheaders",
     "rest_framework",
+    "rest_framework_swagger",
+    "drf_yasg",
     # "django_filters.rest_framework",
     "rest_framework_simplejwt",
 ]
@@ -99,8 +103,10 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
         "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
     )
 }
+APPEND_SLASH = False
 
 
 # Password validation

@@ -1,12 +1,12 @@
 from django_filters import rest_framework as filters
+import django_filters
+from ....model.student import Organization, Student
 
-from ....model.student import Student
-
-
-class FilterForStudent(filters.FilterSet):
-    registered_date = filters.DateFromToRangeFilter()
-
+class StudentFilter(django_filters.FilterSet):
     class Meta:
         model = Student
-        fields = ["id"]
-        search_fields = ["first_name", "id"]
+        fields = {
+            'id': ['exact'],
+            'user__first_name': ['icontains'],
+            'user__last_name': ['icontains'],
+        }

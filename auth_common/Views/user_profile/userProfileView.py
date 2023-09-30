@@ -28,14 +28,21 @@ from ...serializers.user_profile.student_profile import (
 
 from ...model.organization import Organization
 from ...model.student import Student
-from .filters.filterForOrganizationProfile import FilterForOrganization
-from .filters.filterForStudentProfile import FilterForStudent
+
+# from .filters.filterForOrganizationProfile import FilterForOrganization
+# from .filters.filterForStudentProfile import FilterForStudent
 
 
 class RegisterEditProfileViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.DjangoFilterBackend, OrderingFilter, SearchFilter]
     http_method_names = ["get", "head", "post", "patch", "put"]
-    filterset_class = {"list": FilterForStudent, "list_profile": FilterForOrganization}
+    # filterset_class = {"list": FilterForStudent, "list_profile": FilterForOrganization}
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_student:
+            return Student.objects.filter(user=user)
+        return Organization.objects.filter(user=user)
 
     def registration_view(self, data):
         user = self.request.user
