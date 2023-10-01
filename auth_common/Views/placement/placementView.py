@@ -13,7 +13,7 @@ from ...serializers.placement import (
     PlacementUpdateSerializer,
     PlacementFromApplicationSerializer,
 )
-
+from rest_framework.permissions import IsAuthenticated
 
 class PlacementFromApplicationView(viewsets.ModelViewSet):
     queryset = Placement.objects.all()
@@ -22,10 +22,17 @@ class PlacementFromApplicationView(viewsets.ModelViewSet):
     filterset_fields = ["status"]
     search_fields = ["supervisor"]
 
+    permission_classes = [IsAuthenticated] 
+
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            placement = serializer.save()
+            # Fetch organization ID
+            organization_id = request.user.id
+            print("///////////////////////////////",organization_id)
+
+            # Create placement with the organization association
+            placement = serializer.save(organization_id=organization_id)
             return Response(
                 {
                     "message": "Placement created successfully.",
@@ -34,6 +41,7 @@ class PlacementFromApplicationView(viewsets.ModelViewSet):
                 status=status.HTTP_201_CREATED,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())

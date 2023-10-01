@@ -1,4 +1,5 @@
 
+from auth_common.model.organization import Organization
 from auth_common.model.student import Student
 from .internship import Internship
 from django.db import models
@@ -10,6 +11,7 @@ class Placement(models.Model):
     supervisor = models.CharField(max_length=255)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     internship = models.ForeignKey(Internship, on_delete=models.CASCADE)
+    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
     STATUS_CHOICES = [
         ("ongoing", "Ongoing"),
         ("completed", "Completed"),
