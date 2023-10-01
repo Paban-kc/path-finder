@@ -14,7 +14,7 @@ class InternshipSubmissionViewSet(viewsets.ModelViewSet):
     serializer_class = InternshipSubmissionSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [SearchFilter, OrderingFilter]
-    search_fields = ["title", "description", "location", "industry"]
+    search_fields = ["title", "description", "location", "industry","duration"]
 
     def get_queryset(self):
         queryset = Internship.objects.all()

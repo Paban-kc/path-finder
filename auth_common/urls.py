@@ -38,13 +38,13 @@ router.register(
 
 # Define your urlpatterns for views that are not viewsets
 urlpatterns = [
-    path("/auth/login/", LoginView.as_view(), name="login"),
-    path("/auth/logout/", LogoutView.as_view(), name="logout"),
-    path("/auth/register/", RegisterView.as_view(), name="register"),
-    path("/auth/reset-password/", ResetPasswordView.as_view(), name="reset-password"),
-    path("/auth/user-profile/", UserProfileView.as_view(), name="user-profile"),
+    path("auth/login/", LoginView.as_view(), name="login"),
+    path("auth/logout/", LogoutView.as_view(), name="logout"),
+    path("auth/register/", RegisterView.as_view(), name="register"),
+    path("auth/reset-password/", ResetPasswordView.as_view(), name="reset-password"),
+    path("auth/user-profile/", UserProfileView.as_view(), name="user-profile"),
     path(
-        "/auth/change_password/",
+        "auth/change_password/",
         UserChangePasswordView.as_view(),
         name="change-password",
     ),

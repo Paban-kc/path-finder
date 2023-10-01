@@ -28,11 +28,10 @@ class ResetPasswordSerializer(serializers.Serializer):
 
     def validate_old_password(self, value):
         if not self.user.check_password(value):
-            err_msg = _(
-                "Your old password was entered incorrectly. Please enter it again."
-            )
+            err_msg = _("Your old password was entered incorrectly. Please enter it again.")
             raise serializers.ValidationError(err_msg)
         return value
+
 
     def custom_validation(self, attrs):
         pass
@@ -61,3 +60,10 @@ class ResetPasswordSerializer(serializers.Serializer):
     def save(self):
         self.set_password_form.save()
         update_session_auth_hash(self.request, self.user)
+        # Send email after resetting the password
+        subject = 'Password Reset Successful'
+        message = 'Your password has been successfully reset.'
+        from_email = settings.DEFAULT_FROM_EMAIL
+        recipient_list = [self.user.email]
+
+        send_mail(subject, message, from_email, recipient_list)

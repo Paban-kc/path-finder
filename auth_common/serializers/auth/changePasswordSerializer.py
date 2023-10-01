@@ -32,8 +32,6 @@ class ChangePasswordSerializer(serializers.Serializer):
             raise serializers.ValidationError(err_msg)
         return value
 
-    def custom_validation(self, attrs):
-        pass
 
     def validate(self, attrs):
         self.set_password_form = self.set_password_form_class(
