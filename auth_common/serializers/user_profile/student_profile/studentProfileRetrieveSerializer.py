@@ -5,4 +5,4 @@ from auth_common.model import Student
 class StudentProfileRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        exclude = "__all__"
+        fields = "__all__"
