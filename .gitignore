@@ -4,6 +4,7 @@ env/
 .venv/
 .env/
 .env
+.env.*
 
 # Ignore database files
 db.sqlite3
