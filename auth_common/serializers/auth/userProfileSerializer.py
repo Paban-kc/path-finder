@@ -1,3 +1,4 @@
+from auth_common.model.organization import Organization
 from ...model.auth import User
 
 from rest_framework import serializers

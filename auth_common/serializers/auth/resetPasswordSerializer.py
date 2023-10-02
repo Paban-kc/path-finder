@@ -1,11 +1,9 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.tokens import default_token_generator
-from django.urls import reverse
 from django.utils.translation import gettext as _
 from rest_framework import serializers
 from django.contrib.auth.forms import SetPasswordForm
-from ...utils import int_to_base36
 from django.core.mail import send_mail
 
 UserModel = get_user_model()
