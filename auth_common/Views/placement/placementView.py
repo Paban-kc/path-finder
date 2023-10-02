@@ -6,6 +6,8 @@ from auth_common.model.placement import Placement
 from auth_common.serializers.placement.placementCreateSerializer import (
     PlacementFromApplicationSerializer,
 )
+from django.core.mail import send_mail
+from django.conf import settings
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from ...serializers.placement import (
@@ -14,6 +16,7 @@ from ...serializers.placement import (
     PlacementUpdateSerializer,
     PlacementFromApplicationSerializer,
 )
+from twilio.rest import Client
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -58,16 +61,22 @@ class PlacementFromApplicationView(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
-    # def update(self, request, *args, **kwargs):
-    #     instance = self.get_object()
-    #     serializer = self.get_serializer(instance, data=request.data, partial=True)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save()
-    #     return Response(serializer.data)
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        updated_instance = serializer.save()
 
-    # def partial_update(self, request, *args, **kwargs):
-    #     kwargs['partial'] = True
-    #     return self.update(request, *args, **kwargs)
+        new_status = serializer.validated_data.get("status")
+        if new_status == "completed":
+            recipient_email = updated_instance.student.user.email
+            print(recipient_email)
+            subject = "Placement Completed"
+            message = "Congratulations! Your placement has been completed."
+            from_email = settings.DEFAULT_FROM_EMAIL
+            send_mail(subject, message, from_email, [recipient_email])
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
     def get_serializer_class(self):
         if self.action == "create":
