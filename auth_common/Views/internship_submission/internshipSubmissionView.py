@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.filters import SearchFilter, OrderingFilter
 from auth_common.model.internship import Internship
-from auth_common.serializers.auth.internship.internshipSubmissionCreateSerializer import (
+from auth_common.serializers.internship.internshipSubmissionCreateSerializer import (
     InternshipSubmissionSerializer,
 )
 
@@ -14,7 +14,7 @@ class InternshipSubmissionViewSet(viewsets.ModelViewSet):
     serializer_class = InternshipSubmissionSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [SearchFilter, OrderingFilter]
-    search_fields = ["title", "description", "location", "industry","duration"]
+    search_fields = ["title", "description", "location", "industry", "duration"]
 
     def get_queryset(self):
         queryset = Internship.objects.all()

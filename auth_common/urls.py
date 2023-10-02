@@ -44,7 +44,7 @@ urlpatterns = [
     path("auth/reset-password/", ResetPasswordView.as_view(), name="reset-password"),
     path("auth/user-profile/", UserProfileView.as_view(), name="user-profile"),
     path(
-        "auth/change_password/",
+        "auth/change-password/",
         UserChangePasswordView.as_view(),
         name="change-password",
     ),
