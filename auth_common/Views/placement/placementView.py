@@ -16,7 +16,6 @@ from ...serializers.placement import (
     PlacementUpdateSerializer,
     PlacementFromApplicationSerializer,
 )
-from twilio.rest import Client
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -70,7 +69,6 @@ class PlacementFromApplicationView(viewsets.ModelViewSet):
         new_status = serializer.validated_data.get("status")
         if new_status == "completed":
             recipient_email = updated_instance.student.user.email
-            print(recipient_email)
             subject = "Placement Completed"
             message = "Congratulations! Your placement has been completed."
             from_email = settings.DEFAULT_FROM_EMAIL

@@ -20,7 +20,6 @@ class RegisterView(CreateAPIView):
     def post(self, request, format=None):
         serializer = RegisterSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
-            print("Serialized Data:", serializer.validated_data)
             user = serializer.save()
             token = get_tokens_for_user(user)
             return Response(
