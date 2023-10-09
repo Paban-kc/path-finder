@@ -69,8 +69,11 @@ class PlacementFromApplicationView(viewsets.ModelViewSet):
         new_status = serializer.validated_data.get("status")
         if new_status == "completed":
             recipient_email = updated_instance.student.user.email
+            organization_name = updated_instance.organization.organization_name
+            supervisor_phone = updated_instance.supervisor_phone_no
             subject = "Placement Completed"
-            message = "Congratulations! Your placement has been completed."
+            message = f"Congratulations! You have been hired by {organization_name}. Please contact at {supervisor_phone} for further information."
+
             from_email = settings.DEFAULT_FROM_EMAIL
             send_mail(subject, message, from_email, [recipient_email])
 

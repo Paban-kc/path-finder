@@ -28,7 +28,7 @@ from ...model.student import Student
 
 class RegisterEditProfileViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.DjangoFilterBackend, OrderingFilter, SearchFilter]
-    # serializer_class = StudentProfileCreateSerializer
+    serializer_class = StudentProfileCreateSerializer
     http_method_names = ["get", "head", "post", "patch", "put"]
     permission_classes = [IsAuthenticated]
 
