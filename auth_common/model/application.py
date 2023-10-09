@@ -1,7 +1,6 @@
-from auth_common.model.organization import Organization
+from .auth import BaseInfoModel
 from auth_common.model.student import Student
 from .internship import Internship
-from .auth import BaseInfoModel
 
 from django.db import models
 

@@ -1,5 +1,7 @@
 from django.urls import path
 from rest_framework.routers import DefaultRouter
+
+from auth_common.Views.Public_placement_list.publicPlacementListView import PublicPlacementListView
 from .Views.auth import (
     LoginView,
     LogoutView,
@@ -32,6 +34,7 @@ router.register(
     basename="internship-submission",
 )
 router.register(r"auth/placement", PlacementFromApplicationView, basename="placement")
+router.register(r"auth/public-placement-display", PublicPlacementListView, basename="public-placement-display")
 router.register(
     r"auth/register-profile", RegisterEditProfileViewSet, basename="register-profile"
 )
