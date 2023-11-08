@@ -11,6 +11,6 @@ class UserProfileView(APIView):
     ]  
 
     def get(self, request, format=None):
-        user = request.user  # Get the authenticated user
-        serializer = UserProfileSerializer(user)  # Pass the user to the serializer
+        user = request.user
+        serializer = UserProfileSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)

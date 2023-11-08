@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from auth_common.model.internship import Internship
+from auth_common.model.vacancy import Vacancy
 
 
-class InternshipSubmissionSerializer(serializers.ModelSerializer):
+class VacancySubmissionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Internship
+        model = Vacancy
         exclude = ["organization"]
     
     def to_search_representation(self, instance):

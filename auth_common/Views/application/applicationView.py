@@ -32,30 +32,30 @@ class ApplicationApplyViewSet(viewsets.ModelViewSet):
     http_method_names = ["get", "head", "post", "patch", "put", "delete"]
     filterset_fields = [
         "student_profile",
-        "internship",
+        "vacancy",
         "status",
         "is_approved",
     ]
     search_fields = [
         "student_profile__user__first_name",
         "student_profile__user__last_name",
-        "internship__title",
-        "internship__requirements",
+        "vacancy__title",
+        "vacancy__requirements",
     ]
 
     def perform_create(self, serializer):
-        internship_id = self.request.data.get("internship")
+        vacancy_id = self.request.data.get("vacancy")
 
-        # Check if an application with the same student profile and internship already exists
+        # Check if an application with the same student profile and vacancy already exists
         existing_application = Application.objects.filter(
-            student_profile=self.request.user.student_user, internship_id=internship_id
+            student_profile=self.request.user.student_user, vacancy_id=vacancy_id
         ).first()
 
         if existing_application:
-            raise ValidationError("Application already submitted for this internship.")
+            raise ValidationError("Application already submitted for this vacancy.")
 
         serializer.save(
-            student_profile=self.request.user.student_user, internship_id=internship_id
+            student_profile=self.request.user.student_user, vacancy_id=vacancy_id
         )
 
     def perform_update(self, serializer):

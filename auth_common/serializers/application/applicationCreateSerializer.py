@@ -12,7 +12,7 @@ class ApplicationApplyCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Application
-        exclude = ["student_profile", "internship"]
+        exclude = ["student_profile", "vacancy"]
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -26,25 +26,25 @@ class ApplicationApplyCreateSerializer(serializers.ModelSerializer):
 
         student_profile_data = data.pop("student_profile_data")
 
-        internship_data = {
-            "title": instance.internship.title,
-            "description": instance.internship.description,
-            "start_date": instance.internship.start_date,
-            "end_date": instance.internship.end_date,
-            "location": instance.internship.location,
-            "compensation": instance.internship.compensation,
-            "requirements": instance.internship.requirements,
-            "application_deadline": instance.internship.application_deadline,
-            "qualifications": instance.internship.qualifications,
-            "benefits": instance.internship.benefits,
-            "contact_email": instance.internship.contact_email,
-            "contact_phone": instance.internship.contact_phone,
-            "organization": instance.internship.organization.id,
+        vacancy_data = {
+            "title": instance.vacancy.title,
+            "description": instance.vacancy.description,
+            "start_date": instance.vacancy.start_date,
+            "end_date": instance.vacancy.end_date,
+            "location": instance.vacancy.location,
+            "compensation": instance.vacancy.compensation,
+            "requirements": instance.vacancy.requirements,
+            "application_deadline": instance.vacancy.application_deadline,
+            "qualifications": instance.vacancy.qualifications,
+            "benefits": instance.vacancy.benefits,
+            "contact_email": instance.vacancy.contact_email,
+            "contact_phone": instance.vacancy.contact_phone,
+            "organization": instance.vacancy.organization.id,
         }
 
         final_representation = {
             "student_profile": {**user, **student_profile_data},
-            "internship": internship_data,
+            "vacancy": vacancy_data,
             "application": {
                 "id": data["id"],
                 "created_at": data["created_at"],

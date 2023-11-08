@@ -31,7 +31,7 @@ class PlacementFromApplicationSerializer(serializers.Serializer):
             supervisor=validated_data["supervisor"],
             status=validated_data["status"],
             student=application.student_profile,
-            internship=application.internship,
+            vacancy=application.vacancy,
             organization=organization,
         )
 

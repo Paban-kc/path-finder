@@ -2,6 +2,7 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from auth_common.Views.Public_placement_list.publicPlacementListView import PublicPlacementListView
+from auth_common.Views.vacancy_submission.vacancySubmissionView import VacancySubmissionViewSet
 from .Views.auth import (
     LoginView,
     LogoutView,
@@ -12,9 +13,7 @@ from .Views.auth import (
 )
 from .Views.application.applicationView import ApplicationApplyViewSet
 from .Views.feedback.feedbackView import FeedbackViewSet
-from .Views.internship_submission.internshipSubmissionView import (
-    InternshipSubmissionViewSet,
-)
+
 from .Views.placement.placementView import PlacementFromApplicationView
 from .Views.user_profile.userProfileView import RegisterEditProfileViewSet
 
@@ -29,9 +28,9 @@ router.register(
 )
 router.register(r"auth/feedback", FeedbackViewSet, basename="feedback")
 router.register(
-    r"auth/internship-submission",
-    InternshipSubmissionViewSet,
-    basename="internship-submission",
+    r"auth/vacancy-submission",
+    VacancySubmissionViewSet,
+    basename="vacancy-submission",
 )
 router.register(r"auth/placement", PlacementFromApplicationView, basename="placement")
 router.register(r"auth/public-placement-display", PublicPlacementListView, basename="public-placement-display")

@@ -1,6 +1,6 @@
 from .auth import BaseInfoModel
 from auth_common.model.student import Student
-from .internship import Internship
+from .vacancy import Vacancy
 
 from django.db import models
 
@@ -13,10 +13,10 @@ class Application(BaseInfoModel):
     student_profile = models.ForeignKey(
         Student, on_delete=models.CASCADE, related_name="student_user"
     )
-    internship = models.ForeignKey(
-        Internship, on_delete=models.CASCADE, related_name="applications"
+    vacancy = models.ForeignKey(
+        Vacancy, on_delete=models.CASCADE, related_name="applications"
     )
     is_approved = models.BooleanField(default=False)  
 
     class Meta:
-        unique_together = ("student_profile", "internship")
+        unique_together = ("student_profile", "vacancy")

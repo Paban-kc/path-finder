@@ -1,0 +1,1 @@
+from .vacancySubmissionCreateSerializer import VacancySubmissionSerializer
