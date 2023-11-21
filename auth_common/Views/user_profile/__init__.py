@@ -1,1 +1,0 @@
-from .userProfileView import RegisterEditProfileViewSet

@@ -4,24 +4,23 @@ from rest_framework import viewsets
 from auth_common.model.organization import Organization
 from auth_common.model.placement import Placement
 from auth_common.serializers.placement.placementCreateSerializer import (
-    PlacementFromApplicationSerializer,
+    PlacementCreateSerializer,
 )
 from django.core.mail import send_mail
 from django.conf import settings
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
-from ...serializers.placement import (
-    PlacementListSerializer,
-    PlacementRetrieveSerializer,
-    PlacementUpdateSerializer,
-    PlacementFromApplicationSerializer,
-)
+
 from rest_framework.permissions import IsAuthenticated
 
+from auth_common.serializers.placement.placementListSerializer import PlacementListSerializer
+from auth_common.serializers.placement.placementRetrieveSerializer import PlacementRetrieveSerializer
+from auth_common.serializers.placement.placementUpdateSerializer import PlacementUpdateSerializer
 
-class PlacementFromApplicationView(viewsets.ModelViewSet):
+
+class PlacementView(viewsets.ModelViewSet):
     queryset = Placement.objects.all()
-    serializer_class = PlacementFromApplicationSerializer
+    serializer_class = PlacementCreateSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     filterset_fields = ["status"]
     search_fields = ["supervisor"]
@@ -81,7 +80,7 @@ class PlacementFromApplicationView(viewsets.ModelViewSet):
 
     def get_serializer_class(self):
         if self.action == "create":
-            return PlacementFromApplicationSerializer
+            return PlacementCreateSerializer
         elif self.action == "list":
             return PlacementListSerializer
         elif self.action == "retrieve":

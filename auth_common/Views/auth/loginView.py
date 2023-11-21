@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 
 from ...serializers.auth import LoginSerializer
 from django.contrib.auth import authenticate
-from .registerView import get_tokens_for_user
+from .userCreateView import get_tokens_for_user
 
 class LoginView(APIView):
     def post(self, request, format=None):

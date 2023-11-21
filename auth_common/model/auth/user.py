@@ -8,7 +8,6 @@ from .userManager import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    
     GENDER_CHOICES = [
         ("M", "male"),
         ("F", "female"),
@@ -22,10 +21,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
-    is_student = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    craeted_at = models.DateField(auto_now_add=True)
+    created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now_add=True)
 
     objects = UserManager()
