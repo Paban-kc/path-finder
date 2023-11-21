@@ -1,1 +1,0 @@
-from .internshipSubmissionView import InternshipSubmissionViewSet

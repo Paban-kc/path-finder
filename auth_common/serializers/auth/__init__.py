@@ -2,8 +2,6 @@ from .changePasswordSerializer import ChangePasswordSerializer
 
 from .jwtSerializer import JWTSerializer
 from .loginSerializer import LoginSerializer
-from .registerSerializer import RegisterSerializer
 from .userDetailSerializer import UserDetailSerializer
 from .resetPasswordSerializer import ResetPasswordSerializer
 from .userProfileSerializer import UserProfileSerializer
-from .userBaseSerializer import UserBaseCreateSerializer

@@ -5,7 +5,7 @@ from auth_common.model.placement import Placement
 from django.core.mail import send_mail
 from django.conf import settings
 
-class PlacementFromApplicationSerializer(serializers.Serializer):
+class PlacementCreateSerializer(serializers.Serializer):
     application_id = serializers.IntegerField()
     start_date = serializers.DateField()
     end_date = serializers.DateField()
@@ -31,7 +31,7 @@ class PlacementFromApplicationSerializer(serializers.Serializer):
             supervisor=validated_data["supervisor"],
             status=validated_data["status"],
             student=application.student_profile,
-            internship=application.internship,
+            vacancy=application.vacancy,
             organization=organization,
         )
 
