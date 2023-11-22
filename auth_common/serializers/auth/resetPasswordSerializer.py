@@ -11,8 +11,8 @@ UserModel = get_user_model()
 
 class ResetPasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(max_length=128)
-    new_password1 = serializers.CharField(max_length=128)
-    new_password2 = serializers.CharField(max_length=128)
+    new_password = serializers.CharField(max_length=128)
+    confirm_password = serializers.CharField(max_length=128)
 
     set_password_form_class = SetPasswordForm
 

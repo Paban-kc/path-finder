@@ -12,8 +12,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
             "email",
             "first_name",
             "last_name",
-            "gender",
-            "is_student",
             "is_active",
             "is_admin",
         ]

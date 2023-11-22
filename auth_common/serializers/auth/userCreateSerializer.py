@@ -7,7 +7,7 @@ User = get_user_model()
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
-    password2 = serializers.CharField(style={"input_type": "password"}, write_only=True)
+    confirm_password = serializers.CharField(style={"input_type": "password"}, write_only=True)
 
     class Meta:
         model = User
@@ -16,9 +16,9 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         password = attrs.get("password")
-        password2 = attrs.get("password2")
+        confirm_password = attrs.get("confirm_password")
 
-        if password != password2:
+        if password != confirm_password:
             raise serializers.ValidationError(
                 "password and confirm password do not match"
             )
