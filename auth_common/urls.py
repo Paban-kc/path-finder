@@ -3,6 +3,12 @@ from rest_framework.routers import SimpleRouter
 from auth_common.Views.application.applicationViewSet import ApplicationViewSet
 
 from auth_common.Views.auth.userCreateView import UserCreateView
+from auth_common.Views.latest_vacancies.latestVacanciesViewSet import (
+    LatestVacanciesView,
+)
+from auth_common.Views.max_applied_company.maxAppliedCompanyViewSet import (
+    MaxApplicationsOrganizationView,
+)
 from auth_common.Views.organization_registration.organizationRegistrationViewSet import (
     OrganizationRegistrationViewSet,
 )
@@ -42,6 +48,12 @@ router.register(
 ),
 router.register(r"placement/placement", PlacementView, basename="placement")
 router.register(r"vacancy/public-vacancy", PublicVacancyView, basename="public-vacancy")
+router.register(
+    r"max-applied-company",
+    MaxApplicationsOrganizationView,
+    basename="max-applied-company",
+)
+router.register(r"latest-vacancies", LatestVacanciesView, basename="latest-vacancies")
 
 # Define your urlpatterns for views that are not viewsets
 urlpatterns = [
