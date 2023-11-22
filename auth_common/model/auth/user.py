@@ -13,14 +13,16 @@ class User(AbstractBaseUser, PermissionsMixin):
         ("F", "female"),
         ("O", "other"),
     ]
-    gender = models.CharField(max_length=20, choices=GENDER_CHOICES)
+    gender = models.CharField(
+        max_length=20, choices=GENDER_CHOICES, blank=True, null=True
+    )
     email = models.EmailField(
         verbose_name="email",
         max_length=255,
         unique=True,
     )
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
+    first_name = models.CharField(max_length=200, blank=True, null=True)
+    last_name = models.CharField(max_length=200, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     created_at = models.DateField(auto_now_add=True)
