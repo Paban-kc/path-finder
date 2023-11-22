@@ -1,7 +1,6 @@
 from django_filters import rest_framework as filters
 from auth_common.model.vacancy import Vacancy
 
-
 class VacancyFilter(filters.FilterSet):
     class Meta:
         model = Vacancy
