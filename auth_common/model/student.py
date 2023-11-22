@@ -9,14 +9,17 @@ class Student(BaseInfoModel):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name="student_user"
     )
-    phone_no = models.CharField(max_length=10)
-    alt_phone = models.CharField(max_length=10)
-    university = models.CharField(max_length=255)
-    skills = models.TextField()
-    photo = models.ImageField()
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
+    gender = models.CharField(max_length=20)
+    phone_no = models.CharField(max_length=10, blank=True, null=True)
+    alt_phone = models.CharField(max_length=10, blank=True, null=True)
+    university = models.CharField(max_length=255, blank=True, null=True)
+    skills = models.TextField(blank=True, null=True)
+    photo = models.ImageField(blank=True, null=True)
     resume = models.FileField(upload_to="resumes/", blank=True, null=True)
     cover_letter = models.FileField(upload_to="resumes/", blank=True, null=True)
-    git_hub = models.URLField()
+    git_hub = models.URLField(blank=True, null=True)
     company = models.ForeignKey(
         Organization, on_delete=models.CASCADE, null=True, blank=True
     )
