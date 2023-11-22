@@ -13,3 +13,5 @@ tzdata==2023.3
 PyYAML==6.0.1
 Pillow==10.0.1
 django-filter==23.3
+drf-yasg==1.21.7
+python-decouple==3.8
