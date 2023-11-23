@@ -13,9 +13,13 @@ class UserCreateView(CreateAPIView):
         if serializer.is_valid(raise_exception=True):
             user = serializer.save()
             token = get_tokens_for_user(user)
-            user_id = user.id 
+            user_id = user.id
             return Response(
-                {"user_id":user_id,"token": token, "msg": "user created successfully"},
+                {
+                    "user_id": user_id,
+                    "Token": token,
+                    "msg": "user created successfully",
+                },
                 status=status.HTTP_201_CREATED,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
