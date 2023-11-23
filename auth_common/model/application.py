@@ -7,9 +7,7 @@ from django.db import models
 
 class Application(BaseInfoModel):
     date_applied = models.DateField()
-    status = models.CharField(max_length=255)
-    resume = models.FileField(upload_to="applications/")
-    cover_letter = models.TextField()
+    status = models.CharField(max_length=255,default="pending")
     student_profile = models.ForeignKey(
         Student, on_delete=models.CASCADE, related_name="student_user"
     )
@@ -20,3 +18,5 @@ class Application(BaseInfoModel):
 
     class Meta:
         unique_together = ("student_profile", "vacancy")
+
+        
