@@ -19,3 +19,4 @@ class Organization(BaseInfoModel):
     organization_documents = models.FileField(upload_to="organization_documents",blank=True,null=True)
     pan_no = models.BigIntegerField(null=True, blank=True)
     vat_no = models.BigIntegerField(null=True, blank=True)
+    is_verified=models.BooleanField(default=False)
