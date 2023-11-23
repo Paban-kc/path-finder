@@ -3,7 +3,6 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from auth_common.model.organization import Organization
-
 from auth_common.model.student import Student
 from ...serializers.auth import LoginSerializer
 from django.contrib.auth import authenticate
@@ -22,27 +21,34 @@ class LoginView(APIView):
             if user is not None:
                 token = get_tokens_for_user(user)
 
-                try:
+                # Check if the user is a Student or an Organization
+                if hasattr(user, "student_user"):
                     student_id = user.student_user.id
                     return Response(
-                        {"Token": token, "msg": "Login success", "Student_id": student_id},
-                        status=status.HTTP_200_OK
+                        {
+                            "Token": token,
+                            "msg": "Login success",
+                            "Student_id": student_id,
+                        },
+                        status=status.HTTP_200_OK,
                     )
-                except Student.DoesNotExist:
-                    pass
-
-                try:
+                elif hasattr(user, "organization_user"):
                     organization_id = user.organization_user.id
                     return Response(
-                        {"Token": token, "msg": "Login success", "organization_id": organization_id},
-                        status=status.HTTP_200_OK
+                        {
+                            "Token": token,
+                            "msg": "Login success",
+                            "organization_id": organization_id,
+                        },
+                        status=status.HTTP_200_OK,
                     )
-                except Organization.DoesNotExist:
-                    pass
+                else:
+                    return Response(
+                        {"errors": {"non_field_errors": ["User type not recognized"]}},
+                        status=status.HTTP_401_UNAUTHORIZED,
+                    )
 
-                return Response(
-                    {"errors": {"non_field_errors": ["User type not recognized"]}},
-                    status=status.HTTP_401_UNAUTHORIZED,
-                )
-
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {"errors": {"non_field_errors": ["Invalid email or password"]}},
+            status=status.HTTP_401_UNAUTHORIZED,
+        )
