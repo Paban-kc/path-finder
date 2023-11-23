@@ -18,3 +18,5 @@ class Application(BaseInfoModel):
 
     class Meta:
         unique_together = ("student_profile", "vacancy")
+
+        
