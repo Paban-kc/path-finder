@@ -12,27 +12,5 @@ class Placement(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     vacancy = models.ForeignKey(Vacancy, on_delete=models.CASCADE)
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    # JOB_TYPE_CHOICES = [
-    #     ("full_time", "full_time"),
-    #     ("part_time", "part_time"),
-    #     ("contract", "contract"),
-    #     ("temporary", "temporary"),
-    #     ("volunteer", "volunteer"),
-    # ]
-    # job_type = models.CharField(max_length=20,choices=JOB_TYPE_CHOICES)
-    # EXPERIENCE_LEVEL_CHOICES=[
-    #     ("internship","internship"),
-    #     ("entry_level","entry_level"),
-    #     ("associate","associate"),
-    #     ("mid_senior_level","mid_senior_level"),
-    #     ("director","director"),
-    # ]
-    # experience_level=models.CharField(max_length=20,choices=EXPERIENCE_LEVEL_CHOICES)
-
     location=models.CharField(max_length=20)
-
-    STATUS_CHOICES = [
-        ("ongoing", "Ongoing"),
-        ("completed", "Completed"),
-    ]
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="ongoing")
+    status = models.CharField(max_length=20,default="Pending")

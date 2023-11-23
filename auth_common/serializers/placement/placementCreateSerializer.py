@@ -10,7 +10,7 @@ class PlacementCreateSerializer(serializers.Serializer):
     start_date = serializers.DateField()
     end_date = serializers.DateField()
     supervisor = serializers.CharField(max_length=255)
-    status = serializers.ChoiceField(choices=Placement.STATUS_CHOICES, default="ongoing")
+    status = serializers.CharField(default="pending")
     organization_id = serializers.IntegerField()
 
     def create(self, validated_data):
