@@ -2,8 +2,6 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from auth_common.model.organization import Organization
-from auth_common.model.student import Student
 from ...serializers.auth import LoginSerializer
 from django.contrib.auth import authenticate
 from .userCreateView import get_tokens_for_user
@@ -21,7 +19,7 @@ class LoginView(APIView):
             if user is not None:
                 token = get_tokens_for_user(user)
 
-                # Check if the user is a Student or an Organization
+                # Check logedin user is a Student or an Organization
                 if hasattr(user, "student_user"):
                     student_id = user.student_user.id
                     return Response(

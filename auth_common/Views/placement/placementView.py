@@ -13,9 +13,15 @@ from rest_framework import filters
 
 from rest_framework.permissions import IsAuthenticated
 
-from auth_common.serializers.placement.placementListSerializer import PlacementListSerializer
-from auth_common.serializers.placement.placementRetrieveSerializer import PlacementRetrieveSerializer
-from auth_common.serializers.placement.placementUpdateSerializer import PlacementUpdateSerializer
+from auth_common.serializers.placement.placementListSerializer import (
+    PlacementListSerializer,
+)
+from auth_common.serializers.placement.placementRetrieveSerializer import (
+    PlacementRetrieveSerializer,
+)
+from auth_common.serializers.placement.placementUpdateSerializer import (
+    PlacementUpdateSerializer,
+)
 
 
 class PlacementView(viewsets.ModelViewSet):
@@ -66,12 +72,12 @@ class PlacementView(viewsets.ModelViewSet):
         updated_instance = serializer.save()
 
         new_status = serializer.validated_data.get("status")
-        if new_status == "completed":
+        if new_status == "Select":
             recipient_email = updated_instance.student.user.email
             organization_name = updated_instance.organization.organization_name
             supervisor_phone = updated_instance.supervisor_phone_no
-            subject = "Placement Completed"
-            message = f"Congratulations! You have been hired by {organization_name}. Please contact at {supervisor_phone} for further information."
+            subject = "Selected"
+            message = f"Congratulations! You have been selected for internship by {organization_name}. Please contact at {supervisor_phone} for further information."
 
             from_email = settings.DEFAULT_FROM_EMAIL
             send_mail(subject, message, from_email, [recipient_email])
