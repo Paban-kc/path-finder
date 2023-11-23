@@ -2,8 +2,9 @@ from django.utils.translation import gettext_lazy as _
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.exceptions import AuthenticationFailed
+from auth_common.model.organization import Organization
 
+from auth_common.model.student import Student
 from ...serializers.auth import LoginSerializer
 from django.contrib.auth import authenticate
 from .userCreateView import get_tokens_for_user
@@ -20,15 +21,28 @@ class LoginView(APIView):
 
             if user is not None:
                 token = get_tokens_for_user(user)
-                return Response(
-                    {"Token": token, "msg": "Login success"}, status=status.HTTP_200_OK
-                )
 
-            else:
+                try:
+                    student_id = user.student_user.id
+                    return Response(
+                        {"Token": token, "msg": "Login success", "Student_id": student_id},
+                        status=status.HTTP_200_OK
+                    )
+                except Student.DoesNotExist:
+                    pass
+
+                try:
+                    organization_id = user.organization_user.id
+                    return Response(
+                        {"Token": token, "msg": "Login success", "organization_id": organization_id},
+                        status=status.HTTP_200_OK
+                    )
+                except Organization.DoesNotExist:
+                    pass
+
                 return Response(
-                    {"errors": {"non_field_errors": ["Email or Password is not valid"]}},
+                    {"errors": {"non_field_errors": ["User type not recognized"]}},
                     status=status.HTTP_401_UNAUTHORIZED,
                 )
-                # return AuthenticationFailed({"message": "Failed"})
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
