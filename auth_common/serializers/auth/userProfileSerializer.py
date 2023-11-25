@@ -14,6 +14,7 @@ class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organization
         fields = "__all__"
+        ref_name = "OrganizationSerializer"
 
 
 class UserProfileSerializer(serializers.Serializer):
