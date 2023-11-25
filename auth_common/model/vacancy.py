@@ -16,7 +16,6 @@ class Vacancy(BaseInfoModel):
     application_deadline = models.DateField()
     contact_email = models.EmailField()
     contact_phone = models.CharField(max_length=20)
-    is_featured = models.BooleanField(default=False)
     organization = models.ForeignKey(
         Organization, on_delete=models.CASCADE, related_name="vacancies"
     )
