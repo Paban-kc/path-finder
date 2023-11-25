@@ -19,5 +19,6 @@ class Vacancy(BaseInfoModel):
     organization = models.ForeignKey(
         Organization, on_delete=models.CASCADE, related_name="vacancies"
     )
+    banner_img=models.ImageField(blank=True, null=True)
 
     job_type = models.CharField(max_length=20)
