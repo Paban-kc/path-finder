@@ -6,7 +6,8 @@ from django.db import models
 
 
 class Vacancy(BaseInfoModel):
-    salary = models.CharField(max_length=5, blank=True)
+    salary = models.CharField(max_length=225, blank=True)
+    negotiable = models.BooleanField(default=False)
     duration = models.CharField(max_length=20)
     description = models.CharField(max_length=500)
     start_date = models.DateField(auto_now=True)
