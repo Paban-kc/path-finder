@@ -1,22 +1,33 @@
-from rest_framework import status
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from auth_common.model.organization import Organization
-from auth_common.serializers.register_organization.organizationSerializer import (
-    OrganizationSerializer,
-)
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
+from auth_common.model.organization import Organization
+from auth_common.serializers.auth.userProfileSerializer import OrganizationSerializer
+from auth_common.serializers.register_organization.organizationListSerializer import (
+    OrganizationListSerializer,
+)
 
 
 class OrganizationRegistrationViewSet(viewsets.ModelViewSet):
     serializer_class = OrganizationSerializer
     queryset = Organization.objects.all()
 
-    def post(self, request, *args, **kwargs):
+    def get_serializer_class(self):
+        if self.request.method == "POST":
+            return OrganizationSerializer
+        elif self.request.method == "GET":
+            return OrganizationListSerializer
+        return OrganizationSerializer
+
+    def list(self, request, *args, **kwargs):
+        serializer_class = self.get_serializer_class()
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = serializer_class(queryset, many=True)
+        return Response(serializer.data)
+
+    def create(self, request, *args, **kwargs):
         user = request.data.get("user")
-        org_serializer = OrganizationSerializer(data=request.data)
+        org_serializer = self.get_serializer(data=request.data)
 
         if org_serializer.is_valid(raise_exception=True):
             org_serializer.save()
