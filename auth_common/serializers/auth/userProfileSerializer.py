@@ -16,7 +16,6 @@ class OrganizationSerializer(serializers.ModelSerializer):
         fields = "__all__"
         ref_name = "OrganizationSerializer"
 
-
 class UserProfileSerializer(serializers.Serializer):
     # user_type = serializers.CharField(source='get_user_type_display', read_only=True)
     student_profile = StudentSerializer(source="student_user", read_only=True)
