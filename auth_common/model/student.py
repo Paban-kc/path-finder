@@ -16,7 +16,7 @@ class Student(BaseInfoModel):
     alt_phone = models.CharField(max_length=10, blank=True, null=True)
     university = models.CharField(max_length=255, blank=True, null=True)
     skills = models.TextField(blank=True, null=True)
-    photo = models.ImageField(blank=True, null=True)
+    photo = models.ImageField(upload_to='student_photos/',blank=True, null=True)
     resume = models.FileField(upload_to="resumes/", blank=True, null=True)
     cover_letter = models.FileField(upload_to="resumes/", blank=True, null=True)
     git_hub = models.URLField(blank=True, null=True)
