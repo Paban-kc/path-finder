@@ -8,10 +8,10 @@ from django.db import models
 class Vacancy(BaseInfoModel):
     salary = models.CharField(max_length=225, blank=True)
     duration = models.CharField(max_length=20)
-    description = models.TextField()
+    description = models.CharField(max_length=2000)
     start_date = models.DateField(auto_now=True)
     location = models.CharField(max_length=255)
-    requirements = models.TextField()
+    requirements = models.CharField(max_length=2000)
     application_deadline = models.DateField()
     contact_email = models.EmailField()
     contact_phone = models.CharField(max_length=20)
