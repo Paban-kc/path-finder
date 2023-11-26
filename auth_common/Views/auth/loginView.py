@@ -18,6 +18,7 @@ class LoginView(APIView):
 
             if user is not None:
                 token = get_tokens_for_user(user)
+                print("hello")
 
                 # Check logedin user is a Student or an Organization
                 if hasattr(user, "student_user"):
