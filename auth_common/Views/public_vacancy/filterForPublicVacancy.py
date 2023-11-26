@@ -8,13 +8,9 @@ class VacancyFilter(filters.FilterSet):
         fields = {
             "salary": ["exact"],
             "duration": ["exact"],
-            "description": ["exact"],
-            "start_date": ["exact"],
             "location": ["exact"],
             "requirements": ["exact"],
             "application_deadline": ["exact"],
-            "contact_email": ["exact"],
-            "contact_phone": ["exact"],
             "organization": ["exact"],
             "job_type": ["exact"],
         }
