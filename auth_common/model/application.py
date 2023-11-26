@@ -6,7 +6,7 @@ from django.db import models
 
 
 class Application(BaseInfoModel):
-    date_applied = models.DateField()
+    date_applied = models.DateField(auto_now=True)
     status = models.CharField(max_length=255,default="pending")
     student_profile = models.ForeignKey(
         Student, on_delete=models.CASCADE, related_name="student_user"
