@@ -30,9 +30,17 @@ class OrganizationRegistrationViewSet(viewsets.ModelViewSet):
         org_serializer = self.get_serializer(data=request.data)
 
         if org_serializer.is_valid(raise_exception=True):
-            org_serializer.save()
+            org_instance = org_serializer.save()
+
+            # Assuming user is a ForeignKey in the Organization model
+            organization_id = org_instance.id
 
             return Response(
+                {
+                    "organization_id": organization_id,
+                    "msg": "Organization registration created successfully"
+                    
+                },
                 status=status.HTTP_201_CREATED,
             )
         return Response(
