@@ -88,7 +88,7 @@ WSGI_APPLICATION = "path_finder.wsgi.application"
 DATABASES = {
     "default": {
         # local
-        "ENGINE": "django.db.backends.postgresql",
+        # "ENGINE": "django.db.backends.postgresql",
         # staging
         "ENGINE": "django.db.backends.mysql",
         "NAME": env("DB_NAME"),
