@@ -7,12 +7,11 @@ from django.db import models
 
 class Vacancy(BaseInfoModel):
     salary = models.CharField(max_length=225, blank=True)
-    negotiable = models.BooleanField(default=False)
     duration = models.CharField(max_length=20)
-    description = models.CharField(max_length=500)
+    description = models.TextField()
     start_date = models.DateField(auto_now=True)
     location = models.CharField(max_length=255)
-    requirements = models.CharField(max_length=500)
+    requirements = models.TextField()
     application_deadline = models.DateField()
     contact_email = models.EmailField()
     contact_phone = models.CharField(max_length=20)
