@@ -17,8 +17,9 @@ class MaxApplicationsOrganizationView(viewsets.ViewSet):
         ).order_by("-application_count")
 
         if vacancies.exists():
-            # Serialize the vacancies with application counts
             serializer = VacancyListSerializer(vacancies, many=True)
             return Response(serializer.data)
         else:
-            return Response({"error": "No vacancies found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"error": "No vacancies found"}, status=status.HTTP_404_NOT_FOUND
+            )
