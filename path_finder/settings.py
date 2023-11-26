@@ -90,7 +90,7 @@ DATABASES = {
         # local
         "ENGINE": "django.db.backends.postgresql",
         # staging
-        # "ENGINE": "django.db.backends.mysql",
+        "ENGINE": "django.db.backends.mysql",
         "NAME": env("DB_NAME"),
         "USER": env("DB_USER"),
         "PASSWORD": env("DB_PASSWORD"),
