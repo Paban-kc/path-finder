@@ -9,6 +9,7 @@ class Organization(BaseInfoModel):
     user = models.OneToOneField(
         User, on_delete=models.CASCADE, related_name="organization_user"
     )
+    photo=models.ImageField(blank=True,null=True)
     organization_name = models.CharField(max_length=50,blank=True,null=True)
     industry = models.CharField(max_length=255,blank=True,null=True)
     address = models.CharField(max_length=255,blank=True,null=True)
