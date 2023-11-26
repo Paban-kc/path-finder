@@ -16,9 +16,8 @@ class LogoutView(GenericAPIView):
     throttle_scope = "auth"
     swagger_fake_view = True
 
-    # def get_serializer_class(self):
-    #     # Use the generic Serializer class
-    #     return serializers.Serializer
+    def get_serializer_class(self):
+        return serializers.Serializer
 
     def post(self, request):
         logout(request)
