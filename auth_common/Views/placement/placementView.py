@@ -51,6 +51,18 @@ class PlacementView(viewsets.ModelViewSet):
         serializer = self.serializer_class(data=mutable_data)
         if serializer.is_valid():
             placement = serializer.save()
+
+            # Send email if the status is "Select"
+            if placement.status == "Select":
+                recipient_email = placement.student.user.email
+                organization_name = placement.organization.organization_name
+                supervisor_phone = placement.supervisor_phone_no
+                subject = "Selected"
+                message = f"Congratulations! You have been selected for internship by {organization_name}. Please contact at {supervisor_phone} for further information."
+
+                from_email = settings.DEFAULT_FROM_EMAIL
+                send_mail(subject, message, from_email, [recipient_email])
+
             return Response(
                 {
                     "message": "Placement created successfully.",
@@ -59,11 +71,6 @@ class PlacementView(viewsets.ModelViewSet):
                 status=status.HTTP_201_CREATED,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.filter_queryset(self.get_queryset())
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
