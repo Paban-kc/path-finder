@@ -20,11 +20,6 @@ from decouple import config as env
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-# Media
-
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -36,7 +31,7 @@ SECRET_KEY = "django-insecure-tldu@8wwnl&!7hv891@(wh(bemset!_(f9w3x9w^5z(!@camj5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [env("ALLOWED_HOSTS")]
 
 # Application definition
 
@@ -52,7 +47,6 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework_swagger",
     "drf_yasg",
-    # "django_filters.rest_framework",
     "rest_framework_simplejwt",
 ]
 
@@ -93,7 +87,10 @@ WSGI_APPLICATION = "path_finder.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        # local
+        # "ENGINE": "django.db.backends.postgresql",
+        # staging
+        "ENGINE": "django.db.backends.mysql",
         "NAME": env("DB_NAME"),
         "USER": env("DB_USER"),
         "PASSWORD": env("DB_PASSWORD"),
@@ -145,10 +142,12 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media/")
 
 
 # Default primary key field type
@@ -182,4 +181,5 @@ CORS_ALLOWED_ORIGINS = [
     # "https://example.com",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://192.168.1.99:8002",
 ]

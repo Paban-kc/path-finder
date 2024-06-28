@@ -1,4 +1,0 @@
-from .studentProfileCreateSerializer import StudentProfileCreateSerializer
-from .studentProfileListSerializer import StudentProfileListSerializer
-from .studentProfileUpdateSerializer import StudentProfileUpdateSerializer
-from .studentProfileRetrieveSerializer import StudentProfileRetrieveSerializer

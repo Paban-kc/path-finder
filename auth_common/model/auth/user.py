@@ -8,30 +8,30 @@ from .userManager import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    
     GENDER_CHOICES = [
         ("M", "male"),
         ("F", "female"),
         ("O", "other"),
     ]
-    gender = models.CharField(max_length=20, choices=GENDER_CHOICES)
+    gender = models.CharField(
+        max_length=20, choices=GENDER_CHOICES, blank=True, null=True
+    )
     email = models.EmailField(
         verbose_name="email",
         max_length=255,
         unique=True,
     )
-    first_name = models.CharField(max_length=200)
-    last_name = models.CharField(max_length=200)
-    is_student = models.BooleanField(default=False)
+    first_name = models.CharField(max_length=200, blank=True, null=True)
+    last_name = models.CharField(max_length=200, blank=True, null=True)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
-    craeted_at = models.DateField(auto_now_add=True)
+    created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now_add=True)
 
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["first_name"]
+    # REQUIRED_FIELDS = ["first_name"]
 
     def __str__(self):
         return self.email

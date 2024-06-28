@@ -1,11 +1,9 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth.tokens import default_token_generator
-from django.urls import reverse
 from django.utils.translation import gettext as _
 from rest_framework import serializers
 from django.contrib.auth.forms import SetPasswordForm
-from ...utils import int_to_base36
 from django.core.mail import send_mail
 
 UserModel = get_user_model()
@@ -13,8 +11,8 @@ UserModel = get_user_model()
 
 class ResetPasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(max_length=128)
-    new_password1 = serializers.CharField(max_length=128)
-    new_password2 = serializers.CharField(max_length=128)
+    new_password = serializers.CharField(max_length=128)
+    confirm_password = serializers.CharField(max_length=128)
 
     set_password_form_class = SetPasswordForm
 
@@ -28,11 +26,10 @@ class ResetPasswordSerializer(serializers.Serializer):
 
     def validate_old_password(self, value):
         if not self.user.check_password(value):
-            err_msg = _(
-                "Your old password was entered incorrectly. Please enter it again."
-            )
+            err_msg = _("Your old password was entered incorrectly. Please enter it again.")
             raise serializers.ValidationError(err_msg)
         return value
+
 
     def custom_validation(self, attrs):
         pass
@@ -61,3 +58,10 @@ class ResetPasswordSerializer(serializers.Serializer):
     def save(self):
         self.set_password_form.save()
         update_session_auth_hash(self.request, self.user)
+        # Send email after resetting the password
+        subject = 'Password Reset Successful'
+        message = 'Your password has been successfully reset.'
+        from_email = settings.DEFAULT_FROM_EMAIL
+        recipient_list = [self.user.email]
+
+        send_mail(subject, message, from_email, recipient_list)

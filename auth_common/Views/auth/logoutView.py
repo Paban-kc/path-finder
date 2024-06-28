@@ -5,6 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import serializers  # Import the serializer module
 
+
 class LogoutView(GenericAPIView):
     """
     Calls Django logout method to logout the current session.
@@ -16,9 +17,8 @@ class LogoutView(GenericAPIView):
     swagger_fake_view = True
 
     def get_serializer_class(self):
-        # Use the generic Serializer class
         return serializers.Serializer
 
     def post(self, request):
         logout(request)
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({"msg": "Logout success"}, status=status.HTTP_200_OK)

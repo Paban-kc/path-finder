@@ -1,53 +1,26 @@
-from django.contrib.auth import update_session_auth_hash
-from django.contrib.auth.forms import SetPasswordForm
-from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
-
+from django.contrib.auth.hashers import check_password, make_password
 
 class ChangePasswordSerializer(serializers.Serializer):
-    old_password = serializers.CharField(max_length=128)
-    new_password1 = serializers.CharField(max_length=128)
-    new_password2 = serializers.CharField(max_length=128)
+    new_password = serializers.CharField(max_length=128, required=True)
+    confirm_password = serializers.CharField(max_length=128, required=True)
 
-    set_password_form_class = SetPasswordForm
+    def validate(self, data):
+        new_password = data.get("new_password")
+        confirm_password = data.get("confirm_password")
 
-    set_password_form = None
+        if new_password != confirm_password:
+            raise serializers.ValidationError("New password and confirm password do not match.")
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        return data
 
-        self.request = self.context.get("request")
-        self.user = getattr(self.request, "user", None)
+    def update_password(self, user):
+        new_password = self.validated_data["new_password"]
 
-    def validate_old_password(self, value):
-        invalid_password_conditions = (
-            self.user,
-            not self.user.check_password(value),
-        )
+        if check_password(new_password, user.password):
+            raise serializers.ValidationError("New password cannot be the same as the old password.")
 
-        if all(invalid_password_conditions):
-            err_msg = _(
-                "Your old password was entered incorrectly. Please enter it again."
-            )
-            raise serializers.ValidationError(err_msg)
-        return value
-
-    def custom_validation(self, attrs):
-        pass
-
-    def validate(self, attrs):
-        self.set_password_form = self.set_password_form_class(
-            user=self.user,
-            data=attrs,
-        )
-
-        self.custom_validation(attrs)
-        if not self.set_password_form.is_valid():
-            raise serializers.ValidationError(self.set_password_form.errors)
-        return attrs
-
-
-    def save(self):
-        self.set_password_form.save()
-        update_session_auth_hash(self.request, self.user)
-        
+        # Hash the new password and save it to the user object
+        hashed_password = make_password(new_password)
+        user.password = hashed_password
+        user.save()
