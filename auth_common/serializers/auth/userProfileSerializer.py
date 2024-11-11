@@ -13,7 +13,7 @@ class OrganizationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Organization
-        fields = "__all__"
+        fields = ["id","user","organization_name","photo","industry","address","website","phone_no","organization_documents"]
         ref_name = "OrganizationSerializer"
 
 class UserProfileSerializer(serializers.Serializer):

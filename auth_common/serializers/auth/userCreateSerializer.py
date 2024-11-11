@@ -5,7 +5,6 @@ from django.conf import settings
 
 User = get_user_model()
 
-
 class UserCreateSerializer(serializers.ModelSerializer):
     confirm_password = serializers.CharField(
         style={"input_type": "password"}, write_only=True
@@ -13,7 +12,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = "__all__"
+        fields = ["email", "password", "confirm_password", "first_name", "last_name"]
         extra_kwargs = {"password": {"write_only": True}}
 
     def validate(self, attrs):
@@ -22,16 +21,17 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
         if password != confirm_password:
             raise serializers.ValidationError(
-                "password and confirm password do not match"
+                "Password and confirm password do not match"
             )
         return attrs
 
     def create(self, validated_data):
+        validated_data.pop("confirm_password", None)
         user = User.objects.create_user(**validated_data)
 
         # Send email notification after successful registration
-        subject = "Welcome to path finder"
-        message = "Thank you for registering with path finder. Welcome aboard!"
+        subject = "Welcome to Path Finder"
+        message = "Thank you for registering with Path Finder. Welcome aboard!"
         from_email = settings.DEFAULT_FROM_EMAIL
         recipient_list = [user.email]
 

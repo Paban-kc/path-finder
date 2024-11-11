@@ -17,6 +17,7 @@ from auth_common.Views.public_vacancy.publicVacancyViewSet import PublicVacancyV
 from auth_common.Views.register_student.studentRegistrationViewSet import (
     StudentRegistrationViewSet,
 )
+from auth_common.Views.skill_matchingViews import SkillsMatchingView
 from auth_common.Views.vacancy_post.vacancyPostViewSet import VacancyPostView
 from auth_common.Views.auth import (
     LoginView,
@@ -67,6 +68,7 @@ urlpatterns = [
         UserChangePasswordView.as_view(),
         name="change-password",
     ),
+    path("skills-matching", SkillsMatchingView.as_view(), name="skills-matching"),
 ]
 
 # Include the router URLs

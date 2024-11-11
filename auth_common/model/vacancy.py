@@ -19,5 +19,5 @@ class Vacancy(BaseInfoModel):
         Organization, on_delete=models.CASCADE, related_name="vacancies"
     )
     banner_img=models.FileField(blank=True, null=True)
-
+    similarity_score=models.DecimalField(decimal_places=2,default=0.00,max_digits=5)
     job_type = models.CharField(max_length=20)
