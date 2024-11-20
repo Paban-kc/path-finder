@@ -11,7 +11,7 @@ env = environ.Env()
 environ.Env.read_env(str(BASE_DIR / ".env"))
 
 
-CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS")
+CORS_ALLOW_ALL_ORIGINS = env.bool("CORS_ALLOW_ALL_ORIGINS",default=False)
 CORS_ALLOWED_ORGINS = env.list("CORS_ALLOWED_ORIGINS")
 
 # from rest_framework_swagger.views import get_swagger_view
