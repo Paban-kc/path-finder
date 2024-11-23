@@ -10,16 +10,6 @@ class CustomSet:
             if element not in self.elements:
                 self.elements.append(element)
 
-    def custom_add(self, element):
-        """Add an element to the set if it's not already present."""
-        if element not in self.elements:
-            self.elements.append(element)
-
-    def custom_remove(self, element):
-        """Remove an element from the set if it exists."""
-        if element in self.elements:
-            self.elements.remove(element)
-
     def custom_size(self):
         """Return the size of the set."""
         return len(self.elements)
@@ -44,10 +34,14 @@ class CustomSet:
 
 def jaccard_similarity(list1, list2):
     set1 = CustomSet(list1)
+    print("set1",set1)
     set2 = CustomSet(list2)
+    print("set2",set2)
 
     intersection = set1.custom_intersection(set2)
+    print("intersection",intersection)
     union = set1.custom_union(set2)
+    print("union",union)
     no_union=union.custom_size()
     print(no_union,"union")
 

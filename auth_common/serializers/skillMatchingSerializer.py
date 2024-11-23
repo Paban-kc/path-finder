@@ -14,7 +14,9 @@ class SkillsMatchingSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         student = self.context.get('student')
         student_skills = set([skill.strip() for skill in student.skills.split(',') if skill.strip()])
+        # print(">>>>>>>>>>>>>>>>>>>>",student_skills)
         vacancy_skills = set([skill.strip() for skill in instance.requirements.split(',') if skill.strip()])
+        # print("organization req.",vacancy_skills)
 
         similarity_score = float(jaccard_similarity(student_skills, vacancy_skills))
 

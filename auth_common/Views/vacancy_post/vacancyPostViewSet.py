@@ -29,6 +29,11 @@ class VacancyPostView(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend,)
     filterset_class = VacancyFilter
 
+    def get_queryset(self):
+        user = self.request.user
+        
+        return Vacancy.objects.filter(organization__user=user)
+
     def get_serializer_class(self):
         if self.action == "list":
             return VacancyListSerializer
