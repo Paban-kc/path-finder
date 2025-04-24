@@ -71,7 +71,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "path_finder.wsgi.application"
+# WSGI_APPLICATION = "path_finder.wsgi.application"
+ASGI_APPLICATION = "path_finder.asgi.application"
 
 
 # Database
