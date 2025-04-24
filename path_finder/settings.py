@@ -43,15 +43,16 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    #"django.middleware.security.SecurityMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.security.SecurityMiddleware",          # 🔐 First for security headers
+    "corsheaders.middleware.CorsMiddleware",                  # 🌍 CORS right after
+    "django.contrib.sessions.middleware.SessionMiddleware",   # 🛒 For sessions
+    "django.middleware.common.CommonMiddleware",              # 📦 Common features
+    "django.middleware.csrf.CsrfViewMiddleware",              # 🛡 CSRF protection
+    "django.contrib.auth.middleware.AuthenticationMiddleware",# 👤 Authentication
+    "django.contrib.messages.middleware.MessageMiddleware",   # 💬 Messages
+    "django.middleware.clickjacking.XFrameOptionsMiddleware", # 🛡 Clickjacking
 ]
+
 
 ROOT_URLCONF = "path_finder.urls"
 
