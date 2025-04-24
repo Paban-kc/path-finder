@@ -37,20 +37,18 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "corsheaders",
     "rest_framework",
-    "rest_framework_swagger",
-    "drf_yasg",
     "rest_framework_simplejwt",
 ]
 
 MIDDLEWARE = [
-    "django.middleware.security.SecurityMiddleware",          # 🔐 First for security headers
-    "corsheaders.middleware.CorsMiddleware",                  # 🌍 CORS right after
-    "django.contrib.sessions.middleware.SessionMiddleware",   # 🛒 For sessions
-    "django.middleware.common.CommonMiddleware",              # 📦 Common features
-    "django.middleware.csrf.CsrfViewMiddleware",              # 🛡 CSRF protection
-    "django.contrib.auth.middleware.AuthenticationMiddleware",# 👤 Authentication
-    "django.contrib.messages.middleware.MessageMiddleware",   # 💬 Messages
-    "django.middleware.clickjacking.XFrameOptionsMiddleware", # 🛡 Clickjacking
+    "django.middleware.security.SecurityMiddleware",  # 🔐 First for security headers
+    "corsheaders.middleware.CorsMiddleware",  # 🌍 CORS right after
+    "django.contrib.sessions.middleware.SessionMiddleware",  # 🛒 For sessions
+    "django.middleware.common.CommonMiddleware",  # 📦 Common features
+    "django.middleware.csrf.CsrfViewMiddleware",  # 🛡 CSRF protection
+    "django.contrib.auth.middleware.AuthenticationMiddleware",  # 👤 Authentication
+    "django.contrib.messages.middleware.MessageMiddleware",  # 💬 Messages
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",  # 🛡 Clickjacking
 ]
 
 
@@ -72,8 +70,8 @@ TEMPLATES = [
     },
 ]
 
-# WSGI_APPLICATION = "path_finder.wsgi.application"
-ASGI_APPLICATION = "path_finder.asgi.application"
+WSGI_APPLICATION = "path_finder.wsgi.application"
+# ASGI_APPLICATION = "path_finder.asgi.application"
 
 # SECURITY
 # ------------------------------------------------------------------------------
@@ -88,10 +86,7 @@ SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 DATABASES = {
     "default": {
-        # local
         "ENGINE": "django.db.backends.postgresql",
-        # staging
-        # "ENGINE": "django.db.backends.mysql",
         "NAME": env("DB_NAME"),
         "USER": env("DB_USER"),
         "PASSWORD": env("DB_PASSWORD"),
@@ -99,30 +94,9 @@ DATABASES = {
         "PORT": env("DB_PORT"),
     }
 }
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.mysql",
-#         "NAME": env("DB_NAME"),
-#         "USER": env("DB_USER"),
-#         "PASSWORD": env("DB_PASSWORD"),
-#         "HOST": env("DB_HOST"),
-#         "PORT": env("DB_PORT"),
-#     },
-# }
+
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
-# DATABASES = {
-#     "default": {
-#         # local
-#         # "ENGINE": "django.db.backends.postgresql",
-#         # staging
-#         "ENGINE": "django.db.backends.mysql",
-#         "NAME": 'mysqldb',
-#         "USER": 'root',
-#         "PASSWORD": 'admin',
-#         "HOST": '127.0.0.1',
-#         "PORT": '3306',
-#     }
-# }
+
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
