@@ -74,6 +74,13 @@ TEMPLATES = [
 # WSGI_APPLICATION = "path_finder.wsgi.application"
 ASGI_APPLICATION = "path_finder.asgi.application"
 
+# SECURITY
+# ------------------------------------------------------------------------------
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = True
+X_FRAME_OPTIONS = "DENY"
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
